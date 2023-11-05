@@ -1,0 +1,10 @@
+name: KteManhunt
+version: '${project.version}'
+main: kteproject.ktemanhunt.main
+api-version: '1.16'
+authors: [kaanflod, benlordlex, alwaysruby]
+description: KteProject Manhunt Game Plugin
+softdepend: [PlaceholderAPI]
+commands:
+  ktemanhunt:
+    description: "Kte Manhunt Command"

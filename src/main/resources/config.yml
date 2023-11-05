@@ -1,0 +1,14 @@
+configurate:
+  #Will the server switch off automatically when the match is over?
+  server-stop: true
+  #Will the Piglins give extra enderpearl?(chance)
+  piglinpearlboost: false
+  #Should the server auto-start the game?
+  auto-start: true
+  #How many people on the server to start the game automatic.
+  auto-start-count: 10
+  #How many seconds after a certain number of players the game will start.
+  auto-start-time: 15
+  #How long do hunters freeze when the game starts?
+  freeze-time: 60
+
