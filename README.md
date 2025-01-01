@@ -25,5 +25,8 @@ This KteManhunt plugin allows you to play manhunt automatically. You can change 
 # Test Results
 Intel E5-2699 V4 server with 6CPUs handled 40-50 player comfortably.
 
+# SpigotMC
+[SpigotMC](https://www.spigotmc.org/resources/ktemanhunt.121632/)
+
 For any plugin-related bugs, errors, or suggestions, please contact us via [Discord](https://discord.gg/Z9Q9vVmPPp).
 
