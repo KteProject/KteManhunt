@@ -1,0 +1,44 @@
+prefix: "&8Kte&aManhunt:&r"
+
+command-messages:
+  havent-permission: "%prefix% &c&lWARNING, &4You haven't permission for this command"
+  start-game: "%prefix% &a&lOKAY, &aGame started!"
+  already-started-game: "%prefix% &c&lWARNING, &4Game already started"
+  plugin-reloaded: "%prefix% &a&lOKAY, &aPlugin reloaded"
+
+titles:
+  game-start:
+    hunters:
+      title: "&a&lYOU'RE HUNTER"
+      subtitle: "&aKill the &cSpeedrunners"
+    speedrunners:
+      title: "&c&lYOU'RE SPEEDRUNNER"
+      subtitle: "&aFinish the Game"
+  hunters-started-game:
+    title: "&c"
+    subtitle: "&aHunters started the game!"
+  finished-game:
+    winner-speedrunners:
+      title: "&a&lGAME FINISHED"
+      subtitle: "&aWINNER: &cSpeedRunners"
+    winner-hunters:
+      title: "&a&lGAME FINISHED"
+      subtitle: "&aWINNER: &cHunters"
+  death:
+    speedrunners:
+      title: "&c&lDIED"
+      subtitle: "&cCan't spawn"
+    hunters:
+      title: "&c&lDIED"
+      subtitle: "&aRespawn in &73 seconds"
+  eliminated:
+    title: "&c&lELIMINATED"
+    subtitle: "&aNext time!"
+
+compass:
+  compass-name: "&a%player% - %distance%m"
+  compass-name-but-havent-speedrunner: "&aHaven't speedrunner in this world"
+
+other:
+  autostart-actionbar: "&7Game start in &a%seconds% second"
+  cant-damage-teammate: "%prefix% &c&lWARNING, &4You can't damage your teammate"

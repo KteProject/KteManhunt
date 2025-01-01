@@ -1,0 +1,46 @@
+#KteManhunt Plugin Configurations File
+#If you change the messages, you must edit messages.yml file in this folder
+
+configurations:
+  #This is an option for you to set how the game ends:
+  #- kill-dragon -> If the speedrunners kills the Ender Dragon, the game ends
+  #- go-end -> If the speedrunners go to end, the game ends
+  #- go-nether -> If the speedrunners go to nether, the game ends
+  game-type: "kill-dragon"
+  #If it opens, the server will shut down after 10 seconds when the game ends.
+  stop-server: true
+  #How many seconds will the hunters wait when the game starts. (Seconds)
+  freeze-time: 60
+  #Allows Freeze to write in the chat how much time is left
+  announce-freeze-time:
+    enabled: true
+    #You can change times (seconds)
+    60: "&8Kte&aManhunt: &7Last &c60 seconds &7until the start of the Hunts"
+    30: "&8Kte&aManhunt: &7Last &c30 seconds &7until the start of the Hunts"
+    15: "&8Kte&aManhunt: &7Last &c15 seconds &7until the start of the Hunts"
+    5: "&8Kte&aManhunt: &7Last &c5 seconds &7until the start of the Hunts"
+    3: "&8Kte&aManhunt: &7Last &c3 seconds &7until the start of the Hunts"
+    2: "&8Kte&aManhunt: &7Last &c2 seconds &7until the start of the Hunts"
+    1: "&8Kte&aManhunt: &7Last &c1 seconds &7until the start of the Hunts"
+  #Worldborder size before the game starts
+  lobby-world-border: 10
+  #Worldborder size after the game starts
+  game-world-border: 100000
+  #If the speedrunners don't kill the ender dragon within a period of time,
+  #the game will end, you can set the duration here. (Seconds)
+  game-finish-time: 600
+  #Can a player attack his own teammate
+  can-damage-teammate: false
+  #This is a system that auto-launches the game after a period of time when a player count is exceeded
+  auto-start:
+    enabled: true
+    #Auto start counting at how many players
+    player-count: 5
+    #What's the duration of this? (Seconds)
+    duration: 90
+
+#Here you can set the death messages that come to the chat when a player dies
+custom-death-messages:
+  enabled: true
+  havent-killer: "&c☠ &a%player%"
+  have-killer: "&c⚔ &a%player% &cfrom &a%killer%"

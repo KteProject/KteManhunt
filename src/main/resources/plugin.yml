@@ -1,0 +1,23 @@
+name: KteManhunt
+version: '${project.version}'
+main: kteproject.ktemanhunt.KteManhunt
+api-version: '1.16'
+website: https://discord.gg/Z9Q9vVmPPp
+author: KteProject
+softdepend: [PlaceholderAPI]
+commands:
+  ktemanhunt:
+    description: "KteManhunt Command"
+permissions:
+  ktemanhunt.command.start:
+    default: op
+    description: "KteManhunt Start Game Sub-Command"
+  ktemanhunt.command.reload:
+    default: op
+    description: "KteManhunt Reload The Plugin Sub-Command"
+  ktemanhunt.command.*:
+    default: op
+    description: "KteManhunt Use All Sub-Commands"
+    children:
+      ktemanhunt.command.reload: true
+      ktemanhunt.command.start: true
