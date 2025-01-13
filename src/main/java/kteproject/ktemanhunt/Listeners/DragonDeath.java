@@ -20,7 +20,7 @@ public class DragonDeath implements Listener {
 
     @EventHandler
     public void onDragonDeath(EntityDeathEvent event) {
-        if (plugin.getConfig().getString("configurations.game-type").equals("kill-dragon")) {
+        if (GameSystem.mode.equals("kill-dragon")) {
             if(event.getEntity() instanceof EnderDragon) {
                 EnderDragon dragon = (EnderDragon) event.getEntity();
 

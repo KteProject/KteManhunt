@@ -5,6 +5,7 @@ command-messages:
   start-game: "%prefix% &a&lOKAY, &aGame started!"
   already-started-game: "%prefix% &c&lWARNING, &4Game already started"
   plugin-reloaded: "%prefix% &a&lOKAY, &aPlugin reloaded"
+  notfound-mode: "%prefix% &c&lERROR; &4No such game mode found, /ktemanhunt mode"
 
 titles:
   game-start:
@@ -34,7 +35,12 @@ titles:
   eliminated:
     title: "&c&lELIMINATED"
     subtitle: "&aNext time!"
-
+  changed-mode:
+    title: "&6&lMODE CHANGED"
+    subtitle: "&aNew Mode to %mode%"
+  skip:
+    title: "&6&lSKIP THE TIME"
+    subtitle: "&aSkip the Auto Start Time"
 compass:
   compass-name: "&a%player% - %distance%m"
   compass-name-but-havent-speedrunner: "&aHaven't speedrunner in this world"
@@ -42,3 +48,14 @@ compass:
 other:
   autostart-actionbar: "&7Game start in &a%seconds% second"
   cant-damage-teammate: "%prefix% &c&lWARNING, &4You can't damage your teammate"
+
+placeholders:
+  huntersorspeedrunners:
+    speedrunner: "&aSpeedRunner"
+    hunter: "&aHunter"
+    died: "&cDied"
+    matchnotstarted: "&cMatch Not Started"
+  mode:
+    go-nether: "Go Nether"
+    go-end: "Go End"
+    kill-dragon: "Kill Dragon"

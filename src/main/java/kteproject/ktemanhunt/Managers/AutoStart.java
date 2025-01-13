@@ -4,7 +4,6 @@ import kteproject.ktemanhunt.KteManhunt;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +17,7 @@ public class AutoStart implements Listener {
     private final KteManhunt plugin;
     private static BukkitRunnable autostartTask;
     private static final AtomicInteger players = new AtomicInteger(0);
-    private static final AtomicInteger time = new AtomicInteger(0);
+    public static int time = 0;
 
     public AutoStart(KteManhunt plugin) {
         this.plugin = plugin;
@@ -61,7 +60,7 @@ public class AutoStart implements Listener {
             @Override
             public void run() {
                 if(GameSystem.match) {this.cancel();}
-                int remainingTime = time.decrementAndGet();
+                int remainingTime = --time;
                 if (remainingTime <= 0) {
                     new BukkitRunnable() {
                         @Override
@@ -78,7 +77,7 @@ public class AutoStart implements Listener {
             }
         };
         autostartTask.runTaskTimer(plugin, 20L, 20L);
-        time.set(plugin.getConfig().getInt("configurations.auto-start.duration"));
+        time = plugin.getConfig().getInt("configurations.auto-start.duration");
     }
 
     private void stopCountdown() {
@@ -86,6 +85,6 @@ public class AutoStart implements Listener {
             autostartTask.cancel();
             autostartTask = null;
         }
-        time.set(plugin.getConfig().getInt("configurations.auto-start.duration"));
+        time = plugin.getConfig().getInt("configurations.auto-start.duration");
     }
 }

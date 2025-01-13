@@ -15,9 +15,17 @@ permissions:
   ktemanhunt.command.reload:
     default: op
     description: "KteManhunt Reload The Plugin Sub-Command"
+  ktemanhunt.command.skip:
+    default: op
+    description: "KteManhunt Reload The Plugin Sub-Command"
+  ktemanhunt.command.mode:
+    default: op
+    description: "KteManhunt Reload The Plugin Sub-Command"
   ktemanhunt.command.*:
     default: op
     description: "KteManhunt Use All Sub-Commands"
     children:
       ktemanhunt.command.reload: true
       ktemanhunt.command.start: true
+      ktemanhunt.command.skip: true
+      ktemanhunt.command.mode: true

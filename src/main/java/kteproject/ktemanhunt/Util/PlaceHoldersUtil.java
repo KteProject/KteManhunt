@@ -1,6 +1,8 @@
 package kteproject.ktemanhunt.Util;
 
 import kteproject.ktemanhunt.Managers.GameSystem;
+import kteproject.ktemanhunt.Managers.MessagesConfig;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 
 public class PlaceHoldersUtil {
@@ -23,14 +25,16 @@ public class PlaceHoldersUtil {
                 return minutes + ":" + String.format("%02d", seconds);
             case "hunters_or_speedrunners":
                 if(GameSystem.speedrunners.contains(player)) {
-                    return "SpeedRunners";
+                    return ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.huntersorspeedrunners.speedrunner"));
                 } else if(GameSystem.hunters.contains(player)) {
-                    return "Hunters";
+                    return ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.huntersorspeedrunners.hunter"));
                 } else if(!GameSystem.match){
-                    return "Match Not Started";
+                    return ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.huntersorspeedrunners.matchnotstarted"));
                 } else {
-                    return "Died";
+                    return ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.huntersorspeedrunners.died"));
                 }
+            case "mode":
+                return GameSystem.mode.replace("go-nether", ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.mode.go-nether"))).replace("go-end", ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.mode.go-end"))).replace("kill-dragon", ChatColor.translateAlternateColorCodes('&', MessagesConfig.getMessage("placeholders.mode.kill-dragon")));
           default:
                 return null;
         }

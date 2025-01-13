@@ -2,11 +2,14 @@
 #If you change the messages, you must edit messages.yml file in this folder
 
 configurations:
-  #This is an option for you to set how the game ends:
-  #- kill-dragon -> If the speedrunners kills the Ender Dragon, the game ends
-  #- go-end -> If the speedrunners go to end, the game ends
-  #- go-nether -> If the speedrunners go to nether, the game ends
-  game-type: "kill-dragon"
+  game-mode:
+    #If you want the game mode to be randomly selected or chosen via a command, set select-random to true.
+    #If you want to select only one game mode, set select-random to false and write your desired game mode in mode.
+    select-random: true
+    #- kill-dragon -> If the speedrunners kills the Ender Dragon, the game ends
+    #- go-end -> If the speedrunners go to end, the game ends
+    #- go-nether -> If the speedrunners go to nether, the game ends
+    mode: "kill-dragon"
   #If it opens, the server will shut down after 10 seconds when the game ends.
   stop-server: true
   #How many seconds will the hunters wait when the game starts. (Seconds)

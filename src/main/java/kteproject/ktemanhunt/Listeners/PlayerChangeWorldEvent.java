@@ -21,7 +21,7 @@ public class PlayerChangeWorldEvent implements Listener {
     @EventHandler
     private void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getString("configurations.game-type").equals("go-nether")) {
+        if (GameSystem.mode.equals("go-nether")) {
             if (GameSystem.speedrunners.contains(player)) {
                 if (player.getWorld().getName().equals("world_nether")) {
 
@@ -43,7 +43,7 @@ public class PlayerChangeWorldEvent implements Listener {
                 }
             }
         }
-        if (plugin.getConfig().getString("configurations.game-type").equals("go-end")) {
+        if (GameSystem.mode.equals("go-end")) {
             if (GameSystem.speedrunners.contains(player)) {
                 if (player.getWorld().getName().equals("world_the_end")) {
 

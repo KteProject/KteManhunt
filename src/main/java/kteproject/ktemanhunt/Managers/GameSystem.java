@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameSystem implements Listener {
 
@@ -19,6 +20,8 @@ public class GameSystem implements Listener {
     public static boolean huntersRunning;
     public static ArrayList<Player> speedrunners = new ArrayList<>();
     public static ArrayList<Player> hunters = new ArrayList<>();
+    public static String mode;
+    public static Boolean randomModeSelect;
 
     public static void init() {
         match = false;
@@ -32,6 +35,26 @@ public class GameSystem implements Listener {
             worldBorder.setCenter(0, 0);
             worldBorder.setDamageAmount(5);
             worldBorder.setDamageBuffer(2);
+        }
+
+        if(KteManhunt.getConfiguration().getBoolean("configurations.game-mode.select-random")) {
+            randomModeSelect = true;
+            Random random = new Random();
+            int randomint = random.nextInt(3) + 1;
+            switch (randomint) {
+                case 1:
+                    mode = "go-nether";
+                    break;
+                case 2:
+                    mode = "go-end";
+                    break;
+                case 3:
+                    mode = "kill-dragon";
+                    break;
+            }
+        } else {
+            randomModeSelect = false;
+            mode = KteManhunt.getConfiguration().getString("configurations.game-mode.mode");
         }
     }
 
