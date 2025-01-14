@@ -72,7 +72,7 @@ public final class KteManhunt extends JavaPlugin {
                         "\n" + ChatColor.YELLOW + "Your version: " + ChatColor.WHITE + currentVersion +
                         "\n" + ChatColor.YELLOW + "Latest version: " + ChatColor.WHITE + version +
                         "\n" + ChatColor.AQUA + "Download the latest update at:" +
-                        "\n" + ChatColor.BLUE + "https://www.spigotmc.org/resources/112155/" + ChatColor.RESET +
+                        "\n" + ChatColor.BLUE + "https://www.spigotmc.org/resources/121632/" + ChatColor.RESET +
                         "\n" + ChatColor.DARK_RED + "===============================";
 
                 logger.warning(updateMessage);
