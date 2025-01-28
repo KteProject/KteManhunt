@@ -41,6 +41,9 @@ titles:
   skip:
     title: "&6&lSKIP THE TIME"
     subtitle: "&aSkip the Auto Start Time"
+  rejoin:
+    title: "&a&lREJOİN"
+    subtitle: "&aYou're back in the game"
 compass:
   compass-name: "&a%player% - %distance%m"
   compass-name-but-havent-speedrunner: "&aHaven't speedrunner in this world"

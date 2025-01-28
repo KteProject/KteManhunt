@@ -3,8 +3,9 @@ package kteproject.ktemanhunt.Listeners;
 import kteproject.ktemanhunt.KteManhunt;
 import kteproject.ktemanhunt.Managers.Compass;
 import kteproject.ktemanhunt.Managers.MessagesConfig;
+import kteproject.ktemanhunt.Managers.PlayerStats;
+import kteproject.ktemanhunt.Managers.Rewards;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -26,7 +27,12 @@ public class PlayerDeath implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Location deathLocation = event.getEntity().getLocation();
         if (match) {
-            Player player = (Player) event.getEntity();
+            Player player = event.getEntity();
+
+            if (player.getKiller() instanceof Player) {
+                Rewards.killPlayer(player.getKiller());
+                PlayerStats.addKill(player.getKiller());
+            }
 
             if (speedrunners.contains(player)) {
                 speedrunners.remove(player);
@@ -36,10 +42,12 @@ public class PlayerDeath implements Listener {
                 );
                 player.setGameMode(GameMode.SPECTATOR);
                 player.teleport(deathLocation);
-                checkLive();
+                PlayerStats.addDeath(player);
+                checkLive(plugin);
             } else if (hunters.contains(player)) {
                 player.setGameMode(GameMode.SPECTATOR);
                 player.teleport(deathLocation);
+                PlayerStats.addDeath(player);
                 player.sendTitle(
                         MessagesConfig.getMessage("titles.death.hunters.title"),
                         MessagesConfig.getMessage("titles.death.hunter.subtitle")

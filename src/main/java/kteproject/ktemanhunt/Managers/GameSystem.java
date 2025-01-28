@@ -11,7 +11,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.UUID;
 
 public class GameSystem implements Listener {
 
@@ -23,12 +25,15 @@ public class GameSystem implements Listener {
     public static String mode;
     public static Boolean randomModeSelect;
 
+    public static HashMap<UUID, Location> leavedPlayers = new HashMap<UUID, Location>();
+
     public static void init() {
         match = false;
         time = 0;
         huntersRunning = false;
         speedrunners.clear();
         hunters.clear();
+        leavedPlayers.clear();
         for(World world : Bukkit.getWorlds()) {
             WorldBorder worldBorder = world.getWorldBorder();
             worldBorder.setSize(KteManhunt.getConfiguration().getInt("configurations.lobby-world-border"));
@@ -111,9 +116,30 @@ public class GameSystem implements Listener {
         }
     }
 
-    public static void checkLive() {
+    public static void checkLive(Plugin plugin) {
         if (speedrunners.isEmpty()) {
-            time = KteManhunt.getConfiguration().getInt("configurations.game-finish-time");
+            time = 1;
+        }
+        if (hunters.isEmpty()) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendTitle(
+                        MessagesConfig.getMessage("titles.finished-game.winner-speedrunners.title"),
+                        MessagesConfig.getMessage("titles.finished-game.winner-speedrunners.subtitle"),
+                        1,
+                        400,
+                        1
+                );
+            }
+            Rewards.finishedGame("speedrunners-win");
+            for(Player speedrunners : GameSystem.speedrunners) {
+                PlayerStats.addWin(speedrunners);
+            }
+            if (KteManhunt.getConfiguration().getBoolean("configurations.stop-server")) {
+                BukkitScheduler scheduler = Bukkit.getScheduler();
+                scheduler.runTaskLater(plugin, () -> {
+                    plugin.getServer().shutdown();
+                }, 20L * KteManhunt.getConfiguration().getInt("configurations.stop-server-time"));
+            }
         }
     }
 
@@ -124,22 +150,26 @@ public class GameSystem implements Listener {
             public void run() {
                 if(!match) this.cancel();
                 if(huntersRunning) {
-                    time++;
-                    if(time >= KteManhunt.getConfiguration().getInt("configurations.game-finish-time")) {
+                    time--;
+                    if(time == 0) {
                         for(Player p : Bukkit.getOnlinePlayers()) {
                             p.sendTitle(
                                     MessagesConfig.getMessage("titles.finished-game.winner-hunters.title"),
                                     MessagesConfig.getMessage("titles.finished-game.winner-hunters.subtitle"),
                                     1,
-                                    200,
+                                    20 * KteManhunt.getConfiguration().getInt("configurations.stop-server-time"),
                                     1
                             );
+                        }
+                        Rewards.finishedGame("hunters-win");
+                        for(Player hunters : GameSystem.hunters) {
+                            PlayerStats.addWin(hunters);
                         }
                         if(KteManhunt.getConfiguration().getBoolean("configurations.stop-server")) {
                             BukkitScheduler scheduler = Bukkit.getScheduler();
                             scheduler.runTaskLater(plugin, () -> {
                                 plugin.getServer().shutdown();
-                            }, 200L);
+                            }, 20L * KteManhunt.getConfiguration().getInt("configurations.stop-server-time"));
                         }
                     }
                 } else {
@@ -152,6 +182,7 @@ public class GameSystem implements Listener {
                     time--;
                     if(time == 0) {
                         huntersRunning = true;
+                        time = KteManhunt.getConfiguration().getInt("configurations.game-finish-time");
                         for(Player player : hunters) {
                             player.removePotionEffect(PotionEffectType.BLINDNESS);
                             player.removePotionEffect(PotionEffectType.SLOW);

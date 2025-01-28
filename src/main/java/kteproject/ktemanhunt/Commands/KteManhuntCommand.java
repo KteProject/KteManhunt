@@ -21,6 +21,11 @@ public class KteManhuntCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(args.length == 0) {
+            if(!sender.hasPermission("ktemanhunt.command.start") || !sender.hasPermission("ktemanhunt.command.reload") || !sender.hasPermission("ktemanhunt.command.mode") || !sender.hasPermission("ktemanhunt.command.skip")) {
+                sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission"));
+                return true;
+            }
+
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&8-----------------&aKteManhunt&8-----------------"));
             sender.sendMessage("");
             if(sender.hasPermission("ktemanhunt.command.start")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt start &7- &aStart the game"));}
@@ -52,7 +57,7 @@ public class KteManhuntCommand implements CommandExecutor {
             MessagesConfig.reload();
             sender.sendMessage(MessagesConfig.getMessage("command-messages.plugin-reloaded"));
         } else if(args[0].equals("mode")) {
-            if(!sender.hasPermission("ktemanhunt.command.reload")) {
+            if(!sender.hasPermission("ktemanhunt.command.mode")) {
                 sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission"));
                 return true;
             }
@@ -98,15 +103,10 @@ public class KteManhuntCommand implements CommandExecutor {
                 }
             }
         } else if(args[0].equals("skip")) {
-            if(!sender.hasPermission("ktemanhunt.command.skip")) {
-                sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission"));
-                return true;
-            }
+            if(!sender.hasPermission("ktemanhunt.command.skip")) { sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission")); return true; }
+            if(GameSystem.match) {sender.sendMessage(MessagesConfig.getMessage("command-messages.already-started-game")); return true;}
 
-            if(GameSystem.match) {
-                sender.sendMessage(MessagesConfig.getMessage("command-messages.already-started-game"));
-                return true;
-            }
+            AutoStart.time = 3;
 
             for(Player player : Bukkit.getOnlinePlayers()) {
                 String title = MessagesConfig.getMessage("titles.skip.title");
@@ -115,7 +115,6 @@ public class KteManhuntCommand implements CommandExecutor {
                 player.sendTitle(title,sub);
             }
 
-            AutoStart.time = 3;
         }
 
         return true;

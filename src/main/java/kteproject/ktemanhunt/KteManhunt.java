@@ -2,10 +2,7 @@ package kteproject.ktemanhunt;
 
 import kteproject.ktemanhunt.Commands.KteManhuntCommand;
 import kteproject.ktemanhunt.Listeners.*;
-import kteproject.ktemanhunt.Managers.AutoStart;
-import kteproject.ktemanhunt.Managers.Compass;
-import kteproject.ktemanhunt.Managers.GameSystem;
-import kteproject.ktemanhunt.Managers.MessagesConfig;
+import kteproject.ktemanhunt.Managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
@@ -30,12 +27,13 @@ public final class KteManhunt extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new GameSystem(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDamage(), this);
         Bukkit.getPluginManager().registerEvents(new DragonDeath(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerLeave(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerLeave(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeath(this), this);
         Bukkit.getPluginManager().registerEvents(new AutoStart(this), this);
         Bukkit.getPluginManager().registerEvents(new CustomDeathMessage(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerChangeWorldEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerToPlayerDamage(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerStats(), this);
 
         getLogger().info("[Loader] Events loaded.");
 
@@ -50,6 +48,7 @@ public final class KteManhunt extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         MessagesConfig.setup(this);
+        PlayerStats.setup(this);
         getLogger().info("[Loader] Configs loaded.");
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
@@ -88,7 +87,11 @@ public final class KteManhunt extends JavaPlugin {
                     }
                 }, this);
             }
-        });}
+        });
+
+
+
+    }
 
     @Override
     public void onDisable() {

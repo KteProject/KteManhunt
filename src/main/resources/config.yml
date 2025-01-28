@@ -10,8 +10,10 @@ configurations:
     #- go-end -> If the speedrunners go to end, the game ends
     #- go-nether -> If the speedrunners go to nether, the game ends
     mode: "kill-dragon"
-  #If it opens, the server will shut down after 10 seconds when the game ends.
+  #If it opens, the server will shut down
   stop-server: true
+  #If stop-server is open, what time does the server stop (Seconds)
+  stop-server-time: 10
   #How many seconds will the hunters wait when the game starts. (Seconds)
   freeze-time: 60
   #Allows Freeze to write in the chat how much time is left
@@ -47,3 +49,12 @@ custom-death-messages:
   enabled: true
   havent-killer: "&c☠ &a%player%"
   have-killer: "&c⚔ &a%player% &cfrom &a%killer%"
+
+rewards:
+  enabled: true
+  kill-player:
+    - "eco give %player% 5"
+  hunters-win:
+    - "eco give %player% 5"
+  speedrunners-win:
+    - "eco give %player% 5"

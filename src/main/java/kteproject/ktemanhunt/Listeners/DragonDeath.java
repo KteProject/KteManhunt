@@ -3,6 +3,8 @@ package kteproject.ktemanhunt.Listeners;
 import kteproject.ktemanhunt.KteManhunt;
 import kteproject.ktemanhunt.Managers.GameSystem;
 import kteproject.ktemanhunt.Managers.MessagesConfig;
+import kteproject.ktemanhunt.Managers.PlayerStats;
+import kteproject.ktemanhunt.Managers.Rewards;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
@@ -33,12 +35,16 @@ public class DragonDeath implements Listener {
                                 400,
                                 1
                         );
+                        for(Player speedrunners : GameSystem.speedrunners) {
+                            PlayerStats.addWin(speedrunners);
+                        }
                     }
+                    Rewards.finishedGame("speedrunners-win");
                     if (KteManhunt.getConfiguration().getBoolean("configurations.stop-server")) {
                         BukkitScheduler scheduler = Bukkit.getScheduler();
                         scheduler.runTaskLater(plugin, () -> {
                             plugin.getServer().shutdown();
-                        }, 200L);
+                        }, 20L * KteManhunt.getConfiguration().getInt("configurations.stop-server-time"));
                     }
                 }
             }
