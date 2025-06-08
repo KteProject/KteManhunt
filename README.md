@@ -1,7 +1,8 @@
-# KteManhunt
-This KteManhunt plugin allows you to play manhunt automatically. You can change the desired settings from the configuration files. You can modify all messages within the messages.yml file.
+<p align="center">
+  <img src="./assets/image.png" alt="Görsel" />
+</p>
 
-**WARNING: THE PLUGIN IS CURRENTLY IN BETA AND MAY HAVE ISSUES. PLEASE REPORT ANY BUGS TO US VIA [DISCORD](https://discord.gg/Z9Q9vVmPPp).**
+This KteManhunt plugin allows you to play manhunt automatically. You can change the desired settings from the configuration files. You can modify all messages within the messages.yml file.
 
 # Features
 - Automatic game start system
@@ -21,6 +22,9 @@ This KteManhunt plugin allows you to play manhunt automatically. You can change 
 # Commands
 - **/ktemanhunt start (ktemanhunt.command.start)**: This command starts the game immediately.
 - **/ktemanhunt reload (ktemanhunt.command.reload)**: This command refreshes the plugin's configuration files.
+- **/ktemanhunt mode (ktemanhunt.command.mode)**: This command change the mode
+- **/ktemanhunt skip (ktemanhunt.command.skip)**: This command skip the auto start time
+- **/ktemanhunt setspeedrunner (ktemanhunt.command.setspeedrunner)**: This command change the speedrunner before game start
 
 # Test Results
 Intel E5-2699 V4 server with 6CPUs handled 40-50 player comfortably.
