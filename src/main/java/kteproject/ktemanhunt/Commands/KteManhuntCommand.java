@@ -11,6 +11,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class KteManhuntCommand implements CommandExecutor {
     private final KteManhunt plugin;
 
@@ -21,7 +24,7 @@ public class KteManhuntCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(args.length == 0) {
-            if(!sender.hasPermission("ktemanhunt.command.start") || !sender.hasPermission("ktemanhunt.command.reload") || !sender.hasPermission("ktemanhunt.command.mode") || !sender.hasPermission("ktemanhunt.command.skip")) {
+            if(!sender.hasPermission("ktemanhunt.command.start") || !sender.hasPermission("ktemanhunt.command.setspeedrunner")|| !sender.hasPermission("ktemanhunt.command.reload") || !sender.hasPermission("ktemanhunt.command.mode") || !sender.hasPermission("ktemanhunt.command.skip")) {
                 sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission"));
                 return true;
             }
@@ -30,7 +33,8 @@ public class KteManhuntCommand implements CommandExecutor {
             sender.sendMessage("");
             if(sender.hasPermission("ktemanhunt.command.start")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt start &7- &aStart the game"));}
             if(sender.hasPermission("ktemanhunt.command.reload")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt reload &7- &aReload this plugin"));}
-            if(sender.hasPermission("ktemanhunt.command.mode")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt mode <mode> &7- &aReload this plugin"));}
+            if(sender.hasPermission("ktemanhunt.command.mode")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt mode <mode> &7- &aChange the game mode"));}
+            if(sender.hasPermission("ktemanhunt.command.setspeedrunner")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt setspeedrunner <player1> [player2] ... &7- &aMakes player speedrunners"));}
             if(sender.hasPermission("ktemanhunt.command.skip")) {sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"  &a/ktemanhunt skip &7- &aSkip the auto start time"));}
             sender.sendMessage("");
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&8-----------------&aKteManhunt&8-----------------"));
@@ -48,6 +52,37 @@ public class KteManhuntCommand implements CommandExecutor {
                 sender.sendMessage(MessagesConfig.getMessage("command-messages.already-started-game"));
                 return true;
             }
+        }else if(args[0].equals("setspeedrunner")) {
+            if(!sender.hasPermission("ktemanhunt.command.setspeedrunner")) {
+                sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission"));
+                return true;
+            }
+
+            if(args.length == 1) {
+                sender.sendMessage(MessagesConfig.getMessage("command-messages.playernotonline"));
+                return true;
+            }
+
+            ArrayList<Player> speedrunner = new ArrayList<>();
+            for(String playerName : args) {
+                if(Bukkit.getPlayer(playerName) != null) {
+                     speedrunner.add(Bukkit.getPlayer(playerName));
+                }
+            }
+
+            if(speedrunner.isEmpty()) {
+                sender.sendMessage(MessagesConfig.getMessage("command-messages.playernotonline"));
+                return true;
+            } else {
+                GameSystem.setCommandSpeedrunners(speedrunner);
+                String playerNames = speedrunner.stream()
+                        .map(Player::getName)
+                        .collect(Collectors.joining(", "));
+
+                sender.sendMessage(MessagesConfig.getMessage("command-messages.playerssetasspeedrunner").replace("%players%",playerNames));
+                return true;
+            }
+
         } else if(args[0].equals("reload")) {
             if(!sender.hasPermission("ktemanhunt.command.reload")) {
                 sender.sendMessage(MessagesConfig.getMessage("command-messages.havent-permission"));
@@ -73,8 +108,8 @@ public class KteManhuntCommand implements CommandExecutor {
             } else if(args.length == 2) {
                 if(args[1].equals("go-nether")) {
                     for(Player player : Bukkit.getOnlinePlayers()) {
-                        String title = MessagesConfig.getMessage("titles.changed-mode.title").replace("%mode", "Go Nether");
-                        String sub = MessagesConfig.getMessage("titles.changed-mode.subtitle").replace("%mode", "Go Nether");
+                        String title = MessagesConfig.getMessage("titles.changed-mode.title").replace("%mode%", "Go Nether");
+                        String sub = MessagesConfig.getMessage("titles.changed-mode.subtitle").replace("%mode%", "Go Nether");
 
                         player.sendTitle(title,sub);
                     }
@@ -82,8 +117,8 @@ public class KteManhuntCommand implements CommandExecutor {
                 }
                 else if(args[1].equals("go-end")) {
                     for(Player player : Bukkit.getOnlinePlayers()) {
-                        String title = MessagesConfig.getMessage("titles.changed-mode.title").replace("%mode", "Go End");
-                        String sub = MessagesConfig.getMessage("titles.changed-mode.subtitle").replace("%mode", "Go End");
+                        String title = MessagesConfig.getMessage("titles.changed-mode.title").replace("%mode%", "Go End");
+                        String sub = MessagesConfig.getMessage("titles.changed-mode.subtitle").replace("%mode%", "Go End");
 
                         player.sendTitle(title,sub);
                     }
@@ -91,8 +126,8 @@ public class KteManhuntCommand implements CommandExecutor {
                 }
                 else if(args[1].equals("kill-dragon")) {
                     for(Player player : Bukkit.getOnlinePlayers()) {
-                        String title = MessagesConfig.getMessage("titles.changed-mode.title").replace("%mode", "Kill Dragon");
-                        String sub = MessagesConfig.getMessage("titles.changed-mode.subtitle").replace("%mode", "Kill Dragon");
+                        String title = MessagesConfig.getMessage("titles.changed-mode.title").replace("%mode%", "Kill Dragon");
+                        String sub = MessagesConfig.getMessage("titles.changed-mode.subtitle").replace("%mode%", "Kill Dragon");
 
                         player.sendTitle(title,sub);
                     }

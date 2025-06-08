@@ -43,6 +43,16 @@ configurations:
     player-count: 5
     #What's the duration of this? (Seconds)
     duration: 90
+  #The number of runners can be determined by the number of players
+  speedrunners-count:
+    5: 2
+    7: 3
+    10: 4
+    15: 5
+
+piglin-barter:
+  enabled: true
+  ender-pearl-chance: 40 #%
 
 #Here you can set the death messages that come to the chat when a player dies
 custom-death-messages:

@@ -10,10 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class GameSystem implements Listener {
 
@@ -21,6 +18,7 @@ public class GameSystem implements Listener {
     public static int time;
     public static boolean huntersRunning;
     public static ArrayList<Player> speedrunners = new ArrayList<>();
+    public static ArrayList<Player> tempspeedrunners = new ArrayList<>();
     public static ArrayList<Player> hunters = new ArrayList<>();
     public static String mode;
     public static Boolean randomModeSelect;
@@ -32,6 +30,7 @@ public class GameSystem implements Listener {
         time = 0;
         huntersRunning = false;
         speedrunners.clear();
+        tempspeedrunners.clear();
         hunters.clear();
         leavedPlayers.clear();
         for(World world : Bukkit.getWorlds()) {
@@ -66,12 +65,21 @@ public class GameSystem implements Listener {
     public static void startGame(Plugin plugin) {
         if(match) return;
         match = true;
-        if(Bukkit.getOnlinePlayers().size() <= 5) {
-            setSpeedRunners(1);
-        } else if(Bukkit.getOnlinePlayers().size() <= 10) {
-            setSpeedRunners(2);
+
+        if(tempspeedrunners.isEmpty()) {
+            Map<?, ?> speedrunnersConfig = KteManhunt.getConfiguration().getConfigurationSection("configurations.speedrunners-count").getValues(false);
+            int playerCount = Bukkit.getOnlinePlayers().size();
+
+            int RunnerCount = getSpeedrunnersForPlayerCount(playerCount, speedrunnersConfig);
+
+            setSpeedRunners(RunnerCount);
         } else {
-            setSpeedRunners(3);
+            speedrunners.addAll(tempspeedrunners);
+            for (Player hunter : Bukkit.getOnlinePlayers()) {
+                if(!speedrunners.contains(hunter)) {
+                    hunters.add(hunter);
+                }
+            }
         }
         for(Player p : Bukkit.getOnlinePlayers()) {
             p.setHealth(20);
@@ -106,7 +114,8 @@ public class GameSystem implements Listener {
 
     public static void setSpeedRunners(int speedRunnerCount) {
         for (int i = 0; i < speedRunnerCount; i++) {
-            Player selectedPlayer = new ArrayList<>(Bukkit.getOnlinePlayers()).get(i);
+            Random random = new Random();
+            Player selectedPlayer = new ArrayList<>(Bukkit.getOnlinePlayers()).get(random.nextInt(Bukkit.getOnlinePlayers().size()));
             speedrunners.add(selectedPlayer);
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -114,6 +123,10 @@ public class GameSystem implements Listener {
                 hunters.add(p);
             }
         }
+    }
+
+    public static void setCommandSpeedrunners(ArrayList<Player> speedrunners) {
+        tempspeedrunners.addAll(speedrunners);
     }
 
     public static void checkLive(Plugin plugin) {
@@ -198,4 +211,20 @@ public class GameSystem implements Listener {
             }
         }.runTaskTimer(plugin, 0L, 20L);
     }
+
+    private static int getSpeedrunnersForPlayerCount(int playerCount, Map<?, ?> speedrunnersConfig) {
+        int speedrunners = 0;
+
+        for (Map.Entry<?, ?> entry : speedrunnersConfig.entrySet()) {
+            int playerCountThreshold = Integer.parseInt(entry.getKey().toString());
+            int speedrunnerCount = (int) entry.getValue();
+
+            if (playerCount >= playerCountThreshold) {
+                speedrunners = speedrunnerCount;
+            }
+        }
+
+        return speedrunners;
+    }
+
 }

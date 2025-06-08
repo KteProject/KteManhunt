@@ -11,21 +11,26 @@ commands:
 permissions:
   ktemanhunt.command.start:
     default: op
-    description: "KteManhunt Start Game Sub-Command"
+    description: "KteManhunt Start The Game Sub-Command"
   ktemanhunt.command.reload:
     default: op
     description: "KteManhunt Reload The Plugin Sub-Command"
   ktemanhunt.command.skip:
     default: op
-    description: "KteManhunt Reload The Plugin Sub-Command"
+    description: "KteManhunt Skip The Game"
+  ktemanhunt.command.setspeedrunner:
+    default: op
+    description: "KteManhunt Reload The Plugin"
   ktemanhunt.command.mode:
     default: op
-    description: "KteManhunt Reload The Plugin Sub-Command"
+    description: "KteManhunt Change The Mode"
   ktemanhunt.command.*:
     default: op
-    description: "KteManhunt Use All Sub-Commands"
+    description: "KteManhunt Use All Commands"
     children:
       ktemanhunt.command.reload: true
       ktemanhunt.command.start: true
       ktemanhunt.command.skip: true
       ktemanhunt.command.mode: true
+      ktemanhunt.command.setspeedrunner: true
+      ktemanhunt.update: true

@@ -5,7 +5,9 @@ command-messages:
   start-game: "%prefix% &a&lOKAY, &aGame started!"
   already-started-game: "%prefix% &c&lWARNING, &4Game already started"
   plugin-reloaded: "%prefix% &a&lOKAY, &aPlugin reloaded"
-  notfound-mode: "%prefix% &c&lERROR; &4No such game mode found, /ktemanhunt mode"
+  notfound-mode: "%prefix% &c&lERROR, &4No such game mode found, /ktemanhunt mode"
+  playernotonline: "%prefix% &c&lERROR, &4Player is not online"
+  playerssetasspeedrunner: "%prefix% &a&lOKAY, &aPlayers who are set as Speedrunners: %players%"
 
 titles:
   game-start:

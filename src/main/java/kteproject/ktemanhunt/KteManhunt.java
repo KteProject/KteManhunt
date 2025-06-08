@@ -1,5 +1,6 @@
 package kteproject.ktemanhunt;
 
+import kteproject.ktemanhunt.Commands.CommandTab;
 import kteproject.ktemanhunt.Commands.KteManhuntCommand;
 import kteproject.ktemanhunt.Listeners.*;
 import kteproject.ktemanhunt.Managers.*;
@@ -14,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public final class KteManhunt extends JavaPlugin {
@@ -34,10 +36,12 @@ public final class KteManhunt extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerChangeWorldEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerToPlayerDamage(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerStats(), this);
+        Bukkit.getPluginManager().registerEvents(new PiglinBarterEvent(), this);
 
         getLogger().info("[Loader] Events loaded.");
 
         getCommand("ktemanhunt").setExecutor(new KteManhuntCommand(this));
+        Objects.requireNonNull(getCommand("ktemanhunt")).setTabCompleter(new CommandTab());
         getLogger().info("[Loader] Commands loaded.");
 
         GameSystem.init();
@@ -55,8 +59,6 @@ public final class KteManhunt extends JavaPlugin {
             new PlaceHolder().register();
         }
 
-        getLogger().warning("[Warner] WARNING! This plugin is BETA");
-        getLogger().warning("[Warner] If found any bugs, you can send Kte Project Discord Server!");
         getLogger().info("[Loader] KteManhunt enabled");
         Logger logger = this.getLogger();
 
@@ -80,7 +82,7 @@ public final class KteManhunt extends JavaPlugin {
                     @EventHandler
                     public void onPlayerJoin(PlayerJoinEvent event) {
                         Player player = event.getPlayer();
-                        if (player.isOp()) {
+                        if (player.hasPermission("ktemanhunt.updatealert")) {
                             player.sendMessage(ChatColor.RED + "⚠ [Plugin Update Alert] ⚠");
                             player.sendMessage(updateMessage);
                         }
@@ -89,7 +91,7 @@ public final class KteManhunt extends JavaPlugin {
             }
         });
 
-
+        Metrics metrics = new Metrics(this, 24572);
 
     }
 
